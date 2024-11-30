@@ -1,9 +1,12 @@
 import Lecture1_adt.*; // Import all classes from Lecture1_adt package to be used in this client code
+import Lecture4_interfaces_abstract_classes.*;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.Calendar.JANUARY;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -69,7 +72,7 @@ public class Main {
     public static List<Transaction3> makeYearOfPayments (int amount) throws NullPointerException {
 
         List<Transaction3> listOfTransaction3s = new ArrayList<Transaction3>();
-        Calendar date = new GregorianCalendar(2024, Calendar.JANUARY, 3);
+        Calendar date = new GregorianCalendar(2024, JANUARY, 3);
 
 
         for (int i = 0; i < 12; i++) {
@@ -112,7 +115,7 @@ public class Main {
     public static List<Transaction4> makeYearOfPaymentsFinal (int amount) throws NullPointerException {
 
         List<Transaction4> listOfTransaction4s = new ArrayList<Transaction4>();
-        Calendar date = new GregorianCalendar(2024, Calendar.JANUARY, 3);
+        Calendar date = new GregorianCalendar(2024, JANUARY, 3);
 
 
         for (int i = 0; i < 12; i++) {
@@ -144,7 +147,7 @@ public class Main {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InsufficientFundsException {
         // This is the client code
         // Uncomment the following lines to test the class which you would like to test
 
@@ -152,5 +155,55 @@ public class Main {
         // testTransaction2()
         // testTransaction3()
         // testTransaction4()
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2024, Calendar.JANUARY, 3);
+
+        System.out.println("Using Abstract Base Class");
+        BankAccount b1 = new BankAccount(10000);
+        WithdrawalTransaction t1 = new WithdrawalTransaction(300,calendar);
+        t1.apply(b1);
+        double amount = t1.getAmount();
+        System.out.println("Withdrawal Amount:" + amount);
+        double balance = b1.getBalance();
+        System.out.println("Bank Account b1 after withdrawal:" + balance);
+        t1.reverse(b1);
+        balance = b1.getBalance();
+        System.out.println("Bank Account b1 after withdrawal reversal:" + balance);
+        t1.printTransactionDetails();
+
+
+        DepositTrasaction d1 = new DepositTrasaction (300,calendar);
+        d1.apply(b1);
+        double depositAmount = d1.getAmount();
+        System.out.println("Deposit Amount:" + depositAmount);
+        double depositBalance = b1.getBalance();
+        System.out.println("Bank Account b1 after deposit:" +depositBalance);
+
+
+        System.out.println("using concrete base class");
+        BankAccount b2 = new BankAccount(20000);
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.set(2024, Calendar.FEBRUARY, 4);
+
+        ConcreteBaseTransaction T1 = new WithdrawalTransaction2(600,calendar2 );
+        WithdrawalTransaction2 t2 = (WithdrawalTransaction2) T1;
+        t2.apply(b2);
+        double withdrawalAmount2 = t2.getAmount();
+        System.out.println("Concrete class Withdrawal Amount:" + withdrawalAmount2);
+        double withdrawalBalance2 = b2.getBalance();
+        System.out.println("Bank Account b2 after withdrawal:" + withdrawalBalance2);
+        t2.reverse(b2);
+        withdrawalBalance2 = b2.getBalance();
+        System.out.println("Bank Account b2 after withdrawal reversal:" + balance);
+        t1.printTransactionDetails();
+
+        ConcreteBaseTransaction T2 = new DepositTransaction2(600,calendar2 );
+        DepositTransaction2 d2 = (DepositTransaction2) T2;
+        d2.apply(b2);
+        double DepositAmount2 = d2.getAmount();
+        System.out.println("Concrete class Withdrawal Amount:" + DepositAmount2);
+        double DepositBalance2 = b2.getBalance();
+        System.out.println("Bank Account b2 after withdrawal:" + DepositBalance2);
+
     }
 }

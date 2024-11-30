@@ -1,9 +1,13 @@
 package Lecture4_interfaces_abstract_classes;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Calendar;
 
-public class WithdrawalTransaction extends BaseTransaction {
-    public WithdrawalTransaction(int amount, Calendar date) {
+public class WithdrawalTransaction2 extends ConcreteBaseTransaction {
+
+    public WithdrawalTransaction2(int amount, @NotNull Calendar date) {
+
         super(amount, date);
     }
 
@@ -25,12 +29,13 @@ public class WithdrawalTransaction extends BaseTransaction {
 
     // Method to print a transaction receipt or details
     public void printTransactionDetails() {
-        System.out.println("Withdrawal Transaction: " + this.toString());
+        System.out.println("Deposit Transaction: " + this.toString());
     }
 
     /*
     Opportunity for assignment: implementing different form of withdrawal
      */
+
     public void apply(BankAccount ba) throws InsufficientFundsException {
         double curr_balance = ba.getBalance();
 
@@ -42,6 +47,7 @@ public class WithdrawalTransaction extends BaseTransaction {
         double new_balance = curr_balance - getAmount();
         ba.setBalance(new_balance);
     }
+
     public void apply(BankAccount ba, Boolean negative_balance) throws InsufficientFundsException{
         double curr_balance = ba.getBalance();
         double new_balance = 0;

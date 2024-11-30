@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;
 
-public abstract class BaseTransaction implements TransactionInterface {
+public class ConcreteBaseTransaction implements TransactionInterface {
     private final int amount;
     private final Calendar date;
     private final String transactionID;
@@ -17,7 +17,7 @@ public abstract class BaseTransaction implements TransactionInterface {
      * Instialises the field, attributes of a transaction
      * Creates a object of this
      */
-    public BaseTransaction(int amount, @NotNull Calendar date)  {
+    public ConcreteBaseTransaction(int amount, @NotNull Calendar date)  {
         this.amount = amount;
         this.date = (Calendar) date.clone();
         int uniq = (int)Math.round( Math.random()*10000);
@@ -46,6 +46,10 @@ public abstract class BaseTransaction implements TransactionInterface {
         return  transactionID;
     }
     // Method to print a transaction receipt or details
-    public abstract void printTransactionDetails();
-    public abstract void apply(BankAccount ba) throws InsufficientFundsException;
+    public void printTransactionDetails(){
+        System.out.println("transaction Details:"+ transactionID + amount);
+    };
+    /*public boolean apply(BankAccount ba) {
+        return true;
+    };*/
 }
